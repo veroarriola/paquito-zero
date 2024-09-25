@@ -113,7 +113,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             if IN_RASPBERRY:
                 if command in commands:
                     send_command(command)
-            content = '{"command": "' + command + '", "status": "ok"}'.encode('utf-8')
+            content = '{"command": "' + str(command) + '", "status": "ok"}'.encode('utf-8')
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', len(content))

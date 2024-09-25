@@ -1,0 +1,17 @@
+[Unit]
+Description=RPi Python script that shows host on a 16x2 LCD
+
+[Service]
+Type=simple
+User=paquito
+
+ExecStart=/usr/bin/python3 /home/paquito/paquito-zero/scripts/lcd_stuff/service_lcd_host.py
+
+Restart=always
+RestartSec=5
+
+KillMode=process
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target

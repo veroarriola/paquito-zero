@@ -38,19 +38,37 @@ if IN_RASPBERRY:
     sm_slave_addr = 0x8    # dirección del bus en hexadecimal
     sleep_interval = 0.1
 
-    STOP = 0b00000001
-    FORWARD = 0b00001111
-    BACKWARD = 0b11110000
+    # FL FR
+    # RL RR
+    # (Backward Forward)
+    commands = {
+        'stop':       0b00000000,
+        'brake':      0b11001100,
+        'accelerate': 0b00110011,
+        'forward':    0b00001111,
+        'NE':         0b00001010, #right turn
+        'right':      0b01101001,
+        'SE':         0b10100000, #right back
+        'backward':   0b11110000,
+        'SW':         0b01000001, #left back
+        'left':       0b10010110,
+        'NW':         0b00000101, #left turn
+        'turn_right': 0b01011010, #clockwise
+        'turn_left':  0b10100101, #countclockwise
+        'speak':      0b00010001,
+    }
 
 
-def send_command(command):
+def send_command(command, args = []):
     """
     Envía el byte representando el comando indicado al
     arduino.
+    command: cadena de texto para identificar el commando.
+    args: lista con los argumentos opcionales, según cada comando.
     """
     with SMBus(1) as bus:    # indica /dev/ic2-1
         # El límite de SMBus son 32 bytes
-        data = [command, 100]
+        data = [commands[command]] + args
         bus.write_i2c_block_data(sm_slave_addr, 0, data)
         time.sleep(sleep_interval)
 
@@ -92,20 +110,17 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             body = self.rfile.read(content_length)
             command = body.decode("utf-8")
             print("POST body:", command)
-            if command == 'forward':
-                ## Descomenta para que envíe el comando al Arduino
-                send_command(FORWARD)
-            if command == 'backward':
-                send_command(BACKWARD)
-                pass
-            content = '{"command": "forward", "status": "ok"}'.encode('utf-8')
+            if IN_RASPBERRY:
+                if command in commands:
+                    send_command(command)
+            content = '{"command": "' + command + '", "status": "ok"}'.encode('utf-8')
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', len(content))
             self.end_headers()
             self.wfile.write(content)
         else:
-            print("Intengo de contactar ", self.path)
+            print("Intento de contactar ", self.path)
             self.send_error(404)
             self.end_headers()
 

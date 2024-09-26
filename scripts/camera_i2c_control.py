@@ -42,20 +42,20 @@ if IN_RASPBERRY:
     # RL RR
     # (Backward Forward)
     commands = {
-        'stop':       0b00000000,
-        'brake':      0b11001100,
-        'accelerate': 0b00110011,
-        'forward':    0b00001111,
-        'NE':         0b00001010, #right turn
-        'right':      0b01101001,
-        'SE':         0b10100000, #right back
-        'backward':   0b11110000,
-        'SW':         0b01000001, #left back
-        'left':       0b10010110,
-        'NW':         0b00000101, #left turn
-        'turn_right': 0b01011010, #clockwise
-        'turn_left':  0b10100101, #countclockwise
-        'speak':      0b00010001,
+        'stop':            0b00000000,
+        'brake':           0b11001100,
+        'accelerate':      0b00110011,
+        'forward':         0b00001111,
+        'NE':              0b00001010, #right turn
+        'right':           0b01101001,
+        'SE':              0b10100000, #right back
+        'backward':        0b11110000,
+        'SW':              0b01000001, #left back
+        'left':            0b10010110,
+        'NW':              0b00000101, #left turn
+        'clockwise':       0b01011010, #clockwise
+        'countclockwise':  0b10100101, #countclockwise
+        'speak':           0b00010001,
     }
 
 
@@ -71,20 +71,6 @@ def send_command(command, args = []):
         data = [commands[command]] + args
         bus.write_i2c_block_data(sm_slave_addr, 0, data)
         time.sleep(sleep_interval)
-
-
-class StreamingOutput(io.BufferedIOBase):
-    """
-    Clase utilizada con picamera2
-    """
-    def __init__(self):
-        self.frame = None
-        self.condition = Condition()
-
-    def write(self, buf):
-        with self.condition:
-            self.frame = buf
-            self.condition.notify_all()
 
 
 class StreamingOutput(io.BufferedIOBase):

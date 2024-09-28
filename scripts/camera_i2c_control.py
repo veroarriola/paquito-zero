@@ -56,6 +56,7 @@ if IN_RASPBERRY:
         'clockwise':       0b01011010, #clockwise
         'countclockwise':  0b10100101, #countclockwise
         'speak':           0b00010001,
+        'sonar_around':    0b00100010,
     }
 
 

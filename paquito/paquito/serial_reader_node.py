@@ -4,6 +4,7 @@ from rclpy.node import Node
 from std_msgs.msg import String
 
 import serial
+from time import sleep
 
 
 class SerialDataPublisher(Node):

@@ -16,10 +16,11 @@ setup(
     maintainer='blackzafiro',
     maintainer_email='v.arriola@ciencias.unam.mx',
     description='TODO: Package description',
-    license='TODO: License declaration',
+    license='GPL-3.0-only',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'serial_reader_node = paquito.serial_reader_node:main'
         ],
     },
 )

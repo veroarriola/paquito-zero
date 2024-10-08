@@ -25,3 +25,17 @@ class SerialDataPublisher(Node):
         msg.data = 'Hello World: %s' % received_data
         self.publisher_.publish(msg)
         #self.get_logger().info('Publishing: "%s"' % msg.data)
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    serial_data_publisher = SerialDataPublisher()
+
+    rclpy.spin(serial_data_publisher)
+
+    serial_data_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+

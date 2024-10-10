@@ -41,9 +41,9 @@ class SerialDataPublisher(Node):
             self.read_bytes = self.read_bytes[index + 2:]
 
             msg = String()
-            msg.data = 'Hello World: %s' % line
+            msg.data = 'Hello World: %s' % line.decode("utf-8")
             self.publisher_.publish(msg)
-            self.get_logger().info('Publishing: "%s"' % msg.data)
+            #self.get_logger().info('Publishing: "%s"' % msg.data)
 
 def main(args=None):
     print('Hi from serial_reader_node')

@@ -14,7 +14,7 @@ from time import sleep
 class SerialDataPublisher(Node):
     def __init__(self):
         super().__init__('serial_data_publisher')
-        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        self.publisher_ = self.create_publisher(String, 'sensor_readings', 10)
         timer_period = 0.05  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         
@@ -46,6 +46,8 @@ class SerialDataPublisher(Node):
             self.get_logger().info('Publishing: "%s"' % msg.data)
 
 def main(args=None):
+    print('Hi from serial_reader_node')
+
     rclpy.init(args=args)
 
     serial_data_publisher = SerialDataPublisher()

@@ -27,7 +27,7 @@ class StringSubscriber(Node):
     def listener_callback(self, msg):
         #self.get_logger().info(f"I heard: {msg.data}")
         mess = msg.data#.decode("utf-8")
-        print(mess)
+        #print(mess)
         if (mess.endswith('[/ENC]')):
             self.enc_messages += 1
         elif (mess.endswith('[/MIC]')):

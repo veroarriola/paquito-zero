@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'paquito'
+package_name = 'paco_monitor'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'serial_reader_node = paquito.serial_reader_node:main'
+            'simple_monitor = paco_monitor.simple_monitor:main'
         ],
     },
 )

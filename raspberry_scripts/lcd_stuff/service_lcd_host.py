@@ -5,6 +5,10 @@
 # Created by Matthew Timmons-Brown for The Raspberry Pi Guy YouTube channel
 
 # Import necessary libraries for communication and display use
+import sys, os
+from pathlib import Path
+sys.path.insert(0, '/home/paquito/lcd')
+
 import drivers
 from time import sleep
 
@@ -23,8 +27,9 @@ def wait_for_display():
             display = drivers.Lcd(0x27)
             ip = check_output(["hostname", "-I"], encoding="utf8").split()[0]
             str_ip = str(ip)
-        except OSError:
-            pass
+        except OSError as e:
+            print("OSError", e)
+            sys.exit(1)
 
 def display_host():
 # Main body of code
